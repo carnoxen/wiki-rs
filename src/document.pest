@@ -1,0 +1,13 @@
+document = { (block? ~ (block_delimiter | EOI))* }
+block_delimiter = { NEWLINE{2,} }
+block = { (hr | p) }
+
+hr = { MINUS{3,} }
+p = { inline+ }
+
+inline = { (b | plain) }
+b = { PUSH(ASTERISK{2}) ~ inline ~ POP }
+plain = { !PEEK ~ (NEWLINE{1} | ANY+)* }
+
+MINUS = _{ "-" }
+ASTERISK = _{ "*" }
